@@ -10,7 +10,7 @@ import { useAppDispatch } from "./app/hooks";
 
 //MuiTheme
 import theme from "./theme/muitheme";
-import { ThemeProvider, CssBaseline } from "@mui/material";
+import { ThemeProvider, CssBaseline, Stack } from "@mui/material";
 
 function App() {
   return (

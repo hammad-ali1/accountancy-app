@@ -11,7 +11,16 @@ function MenuItems() {
       <Item onClick={() => navigate("/home", { replace: true })}>
         Dashboard
       </Item>
-      {user && (
+      <Item onClick={() => navigate("/home/transaction", { replace: true })}>
+        Transactions
+      </Item>
+      <Item onClick={() => navigate("/home/addTransaction", { replace: true })}>
+        Add Transaction
+      </Item>
+      <Item onClick={() => navigate("/home/asset", { replace: true })}>
+        Assets
+      </Item>
+      {user && user.isAdmin && (
         <Item onClick={() => navigate("/home/users", { replace: true })}>
           Users
         </Item>
