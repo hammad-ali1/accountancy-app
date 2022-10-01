@@ -7,7 +7,7 @@ const axios = axiosCreator.create({
 //TYPES
 
 export class AccountancyUser {
-  _id: string = "6337fcde1e2798cc6b20688b";
+  _id: string = "";
   userName: string = "";
   email: string = "";
   password: string = "";
@@ -20,6 +20,15 @@ export class AccountancyUser {
   isAdmin: boolean = false;
 }
 
+export class Transaction {
+  user: string = "";
+  nameOfTransaction: string = "";
+  dateOfTransaction: string = "";
+  inflowOrOutflow: "Inflow" | "Outflow" = "Inflow";
+  type: "Revenue" | "Other Options" = "Revenue";
+  fromOrTo: string = "";
+  amount: string = "";
+}
 const API = {
   signUp: async (user: AccountancyUser): Promise<AccountancyUser> => {
     return await (
@@ -43,6 +52,21 @@ const API = {
   deleteUser: async (userName: string): Promise<[AccountancyUser]> => {
     return await (
       await axios.post(`users/delete`, { userName })
+    ).data;
+  },
+  addTransaction: async (transaction: Transaction): Promise<Transaction> => {
+    return await (
+      await axios.post(`transactions/add`, transaction)
+    ).data;
+  },
+  getTransactions: async (user: string): Promise<[Transaction]> => {
+    return await (
+      await axios.get(`transactions/${user}`)
+    ).data;
+  },
+  deleteTransaction: async (_id: string): Promise<any> => {
+    return await (
+      await axios.post(`transactions/delete/${_id}`)
     ).data;
   },
 };

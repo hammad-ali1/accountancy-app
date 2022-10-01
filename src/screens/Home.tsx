@@ -13,7 +13,7 @@ function Home() {
         <Header />
       </Box>
       <Stack
-        flex={0.8}
+        flex={1}
         spacing={1}
         direction="row"
         divider={<Divider orientation="vertical" flexItem />}

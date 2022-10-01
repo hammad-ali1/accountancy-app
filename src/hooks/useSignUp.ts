@@ -30,10 +30,10 @@ function useSignUp() {
 
   const handleFormSubmit = async () => {
     if (values.password !== values.confirmPassword)
-      return setSubmitErrorMessage("Please fill all fields");
+      return setSubmitErrorMessage("password does not match");
     if (
-      Object.values(values).every((value) => {
-        if (value) return false;
+      Object.values(values).some((value) => {
+        if (!value) return false;
         else return true;
       })
     )
