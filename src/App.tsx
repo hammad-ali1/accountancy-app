@@ -18,7 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Authentication />} />
         <Route path="/OTP" element={<OTP />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/home/*" element={<Home />} />
       </Routes>
 
       <CssBaseline />

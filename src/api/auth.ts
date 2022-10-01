@@ -1,12 +1,13 @@
 import axiosCreator from "axios";
-
+import { BASE_URL } from "../config";
 const axios = axiosCreator.create({
-  baseURL: "https://cuireview.herokuapp.com/api/accountancy/",
+  baseURL: BASE_URL,
 });
 
 //TYPES
 
 export class AccountancyUser {
+  _id: string = "6337fcde1e2798cc6b20688b";
   userName: string = "";
   email: string = "";
   password: string = "";
@@ -16,6 +17,7 @@ export class AccountancyUser {
   DOB: Date = new Date();
   title: string = "";
   businessName: string = "";
+  isAdmin: boolean = false;
 }
 
 const API = {
@@ -31,6 +33,17 @@ const API = {
     return await (
       await axios.post(`users/login`, { username, password })
     ).data.user;
+  },
+
+  getAllUsers: async (_id: string): Promise<[AccountancyUser]> => {
+    return await (
+      await axios.post(`users/all`, { _id })
+    ).data;
+  },
+  deleteUser: async (userName: string): Promise<[AccountancyUser]> => {
+    return await (
+      await axios.post(`users/delete`, { userName })
+    ).data;
   },
 };
 
