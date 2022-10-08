@@ -3,6 +3,8 @@ import { useAppSelector } from "../app/hooks";
 import { selectUser } from "../slices/userSlice";
 import MenuItems from "../components/MenuItems";
 import Time from "./Time";
+import { grey } from "@mui/material/colors";
+
 function Header() {
   const user = useAppSelector((state) => selectUser(state));
 
@@ -11,7 +13,9 @@ function Header() {
       display="flex"
       width="100vw"
       height="6vh"
-      sx={{ backgroundColor: "lightblue" }}
+      boxShadow={2}
+      sx={{ backgroundColor: grey[300] }}
+      marginBottom={1}
     >
       <Box>
         <MenuItems />

@@ -51,7 +51,7 @@ function MenuItems() {
         </Stack>
       </Drawer>
       <IconButton sx={{ marginLeft: "auto" }} onClick={() => setOpen(true)}>
-        <MenuIcon style={{ color: "white" }} />
+        <MenuIcon style={{ color: "black" }} />
       </IconButton>
     </>
   );
