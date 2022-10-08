@@ -23,11 +23,26 @@ export class AccountancyUser {
 export class Transaction {
   user: string = "";
   nameOfTransaction: string = "";
-  dateOfTransaction: string = "";
+  dateOfTransaction: Date = new Date();
   inflowOrOutflow: "Inflow" | "Outflow" = "Inflow";
   type: "Revenue" | "Other Options" = "Revenue";
   fromOrTo: string = "";
   amount: string = "";
+}
+
+export class Asset {
+  user: string = "";
+  item: string = "";
+  category: string = "";
+  condition: string = "";
+  location: string = "";
+  owner: string = "";
+  acquiredDate: Date = new Date();
+  price: number = 0.0;
+  currentValue: number = 0.0;
+  manufacturer: string = "";
+  series: string = "";
+  inurance: "yes" | "no" = "yes";
 }
 const API = {
   signUp: async (user: AccountancyUser): Promise<AccountancyUser> => {
@@ -59,7 +74,7 @@ const API = {
       await axios.post(`transactions/add`, transaction)
     ).data;
   },
-  getTransactions: async (user: string): Promise<[Transaction]> => {
+  getTransactions: async (user: string): Promise<Transaction[]> => {
     return await (
       await axios.get(`transactions/${user}`)
     ).data;
@@ -67,6 +82,22 @@ const API = {
   deleteTransaction: async (_id: string): Promise<any> => {
     return await (
       await axios.post(`transactions/delete/${_id}`)
+    ).data;
+  },
+
+  addAsset: async (asset: Asset): Promise<Asset> => {
+    return await (
+      await axios.post(`assets/add`, asset)
+    ).data;
+  },
+  getAssets: async (user: string): Promise<Asset[]> => {
+    return await (
+      await axios.get(`assets/${user}`)
+    ).data;
+  },
+  deleteAsset: async (_id: string): Promise<any> => {
+    return await (
+      await axios.post(`assets/delete/${_id}`)
     ).data;
   },
 };

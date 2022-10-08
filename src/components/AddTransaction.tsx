@@ -1,9 +1,9 @@
 import useTransactionForm from "../hooks/useTransactionForm";
+import { useEffect } from "react";
 import {
   Button as MUIButton,
   Box,
   Typography,
-  IconButton,
   Stack,
   InputAdornment,
   TextField,
@@ -15,8 +15,13 @@ import {
 } from "@mui/material";
 import { DateRange } from "@mui/icons-material";
 import { RoundedButton } from "../theme/styledComponents";
-
-function AddTransaction() {
+import { Transaction } from "../api/auth";
+import { yyyyMMddFormat } from "../helpers";
+type AddTransactionProps = {
+  submitHandler?: () => void;
+  initialData?: Transaction;
+};
+function AddTransaction(props: AddTransactionProps) {
   const {
     handleChangeAutoComplete,
     handleChange,
@@ -24,10 +29,13 @@ function AddTransaction() {
     values,
     submitErrorMessage,
     submitSuccess,
-  } = useTransactionForm();
+    setValues,
+  } = useTransactionForm(new Transaction());
+  useEffect(() => {
+    if (props.initialData) setValues(props.initialData);
+  }, [props.initialData, setValues]);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
   return (
     <Box
       sx={{
@@ -37,9 +45,11 @@ function AddTransaction() {
       }}
       flex={isSmallScreen ? 1 : 0.5}
     >
-      <Typography className="blueHeading" variant="h5">
-        Add A Transaction
-      </Typography>
+      {!props.submitHandler && (
+        <Typography className="blueHeading" variant="h5">
+          Add A Transaction
+        </Typography>
+      )}
 
       <FormControl>
         <Stack spacing={3}>
@@ -54,7 +64,7 @@ function AddTransaction() {
           <TextField
             id="dateOfTransaction"
             placeholder="date"
-            value={values.dateOfTransaction}
+            value={yyyyMMddFormat(values.dateOfTransaction)}
             onChange={handleChange("dateOfTransaction")}
             label="Date Of Transaction"
             InputProps={{
@@ -103,7 +113,12 @@ function AddTransaction() {
             type="number"
             variant="outlined"
           />
-          <RoundedButton color="primary" onClick={handleFormSubmit}>
+          <RoundedButton
+            color="primary"
+            onClick={
+              props.submitHandler ? props.submitHandler : handleFormSubmit
+            }
+          >
             Add Transaction
           </RoundedButton>
         </Stack>
