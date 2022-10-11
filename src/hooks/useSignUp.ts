@@ -34,9 +34,24 @@ function useSignUp() {
 
     if (values.password !== values.confirmPassword)
       return setSubmitErrorMessage("password does not match");
-    if (doesObjContainEmptyFields(values))
+    if (
+      !(
+        values.DOB &&
+        values.businessName &&
+        values.confirmPassword &&
+        values.email &&
+        values.userName &&
+        values.title &&
+        values.password &&
+        values.firstName &&
+        values.lastName
+      )
+    )
       return setSubmitErrorMessage("Please fill all fields");
     try {
+      const input = { ...values };
+      //@ts-ignore
+      delete input._id;
       const result = await API.signUp(values);
       console.log(result);
       setSubmitSuccess("Account Created Successfully");

@@ -7,7 +7,7 @@ const axios = axiosCreator.create({
 //TYPES
 
 export class AccountancyUser {
-  _id: string = "1";
+  _id: string = "";
   userName: string = "";
   email: string = "";
   password: string = "";
