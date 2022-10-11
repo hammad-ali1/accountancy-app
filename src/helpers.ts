@@ -12,3 +12,10 @@ export const yyyyMMddFormat = (dateString: string | Date) => {
   const formattedDate = year + "-" + month + "-" + day;
   return formattedDate;
 };
+
+export const doesObjContainEmptyFields = (obj: any) => {
+  return Object.values(obj).some((value) => {
+    if (typeof value === "string" && value === "") return true;
+    else return false;
+  });
+};

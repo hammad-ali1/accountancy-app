@@ -1,6 +1,6 @@
 import API, { Asset } from "../api/auth";
 import { useEffect, useState } from "react";
-
+import { doesObjContainEmptyFields } from "../helpers";
 function useTransactionForm(initialData: Asset) {
   const [values, setValues] = useState<Asset>(initialData);
   const [submitErrorMessage, setSubmitErrorMessage] = useState("");
@@ -16,15 +16,7 @@ function useTransactionForm(initialData: Asset) {
     };
 
   const handleFormSubmit = async () => {
-    if (
-      Object.values(values).some((value) => {
-        if (typeof value === "string" && value === "") {
-          return true;
-        }
-
-        return false;
-      })
-    ) {
+    if (doesObjContainEmptyFields(values)) {
       console.log(values);
       setSubmitSuccess("");
       return setSubmitErrorMessage("Please fill all fields");

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch } from "../app/hooks";
 import { setUser } from "../slices/userSlice";
 import { useNavigate } from "react-router-dom";
+import { doesObjContainEmptyFields } from "../helpers";
 
 class FormFields extends AccountancyUser {
   showPassword: boolean = false;
@@ -29,14 +30,11 @@ function useSignUp() {
   };
 
   const handleFormSubmit = async () => {
+    console.log(values);
+
     if (values.password !== values.confirmPassword)
       return setSubmitErrorMessage("password does not match");
-    if (
-      Object.values(values).some((value) => {
-        if (!value) return false;
-        else return true;
-      })
-    )
+    if (doesObjContainEmptyFields(values))
       return setSubmitErrorMessage("Please fill all fields");
     try {
       const result = await API.signUp(values);

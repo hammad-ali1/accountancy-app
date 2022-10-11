@@ -7,13 +7,13 @@ const axios = axiosCreator.create({
 //TYPES
 
 export class AccountancyUser {
-  _id: string = "";
+  _id: string = "1";
   userName: string = "";
   email: string = "";
   password: string = "";
   firstName: string = "";
   lastName: string = "";
-  authCode: string = "";
+  authCode: string = "1";
   DOB: Date = new Date();
   title: string = "";
   businessName: string = "";
