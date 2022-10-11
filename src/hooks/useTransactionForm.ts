@@ -20,18 +20,20 @@ function useTransactionForm(initialData: Transaction) {
     };
 
   const handleFormSubmit = async () => {
+    console.log(values);
     if (!user._id) {
       setSubmitSuccess("");
       return setSubmitErrorMessage("you are not logged in");
     }
     if (
-      Object.values(values).some((value) => {
-        if (typeof value === "string" && value === "") {
-          return true;
-        }
-
-        return false;
-      })
+      !(
+        values.amount &&
+        values.dateOfTransaction &&
+        values.fromOrTo &&
+        values.inflowOrOutflow &&
+        values.nameOfTransaction &&
+        values.type
+      )
     ) {
       console.log(values);
       setSubmitSuccess("");

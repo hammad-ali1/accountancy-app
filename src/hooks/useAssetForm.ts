@@ -16,6 +16,8 @@ function useTransactionForm(initialData: Asset) {
     };
 
   const handleFormSubmit = async () => {
+    console.log(values);
+
     if (doesObjContainEmptyFields(values)) {
       console.log(values);
       setSubmitSuccess("");
