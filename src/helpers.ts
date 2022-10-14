@@ -19,3 +19,17 @@ export const doesObjContainEmptyFields = (obj: any) => {
     else return false;
   });
 };
+
+export const getAmountFromDataset = (
+  result: any[],
+  type: "Inflow" | "Outflow"
+): number => {
+  if (result.length === 2) {
+    if (result[0].type === type) return result[0].amount;
+    else return result[1].amount;
+  } else if (result.length === 1) {
+    if (result[0].type === type) return result[0].amount;
+    else return 0;
+  }
+  return 0;
+};

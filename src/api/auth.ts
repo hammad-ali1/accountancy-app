@@ -44,6 +44,13 @@ export class Asset {
   series: string = "";
   inurance: "yes" | "no" = "yes";
 }
+
+type Summary = {
+  cashFlowSummary: any;
+  cashFlowDetail: any;
+  assetDetail: any;
+  assetSummary: any;
+};
 const API = {
   signUp: async (user: AccountancyUser): Promise<AccountancyUser> => {
     return await (
@@ -98,6 +105,11 @@ const API = {
   deleteAsset: async (_id: string): Promise<any> => {
     return await (
       await axios.post(`assets/delete/${_id}`)
+    ).data;
+  },
+  getDataSummary: async (user: string): Promise<Summary> => {
+    return await (
+      await axios.get(`transactions/sum/${user}`)
     ).data;
   },
 };

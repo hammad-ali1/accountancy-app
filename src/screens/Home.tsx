@@ -6,6 +6,7 @@ import AddTransaction from "../components/AddTransaction";
 import Assets from "../components/Assets";
 import Header from "../components/Header";
 import AddAsset from "../components/AddAsset";
+import Dashboard from "../components/Dashboard";
 function Home() {
   return (
     <Box style={{ height: "100vh" }}>
@@ -13,7 +14,7 @@ function Home() {
 
       <Box>
         <Routes>
-          <Route path="/" element={<div>Dashboard</div>} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/users" element={<Users />} />
           <Route path="/transaction" element={<Transactions />} />
           <Route path="/addTransaction" element={<AddTransaction />} />

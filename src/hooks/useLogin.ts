@@ -30,6 +30,7 @@ function useLogin() {
   };
 
   const handleFormSubmit = async () => {
+    console.log("Loggin in", values);
     if (values.username && values.password) {
       try {
         const result = await API.logIn(values.username, values.password);
