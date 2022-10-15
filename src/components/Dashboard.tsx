@@ -2,7 +2,7 @@ import API, { Transaction } from "../api/auth";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../app/hooks";
 import { selectUser } from "../slices/userSlice";
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Autocomplete, TextField } from "@mui/material";
 import {
   orange,
   blue,
@@ -19,6 +19,8 @@ import {
   getAmountFromDataset,
   getTotalFromSummary,
   getProfitFromData,
+  subtractYears,
+  subtractMonths,
 } from "../helpers";
 import {
   Chart as ChartJS,
@@ -65,25 +67,33 @@ const profitOptions = {
   },
 };
 
+const cashFilterOptions = ["All", "Year", "Six Months", "Month"];
+const profitFilterOptions = ["All", "Year", "Six Months", "Month"];
+
 function Dashboard() {
   const [totalInflow, setTotalInflow] = useState(0);
   const [totalOutflow, setTotalOutflow] = useState(0);
   const [totalAssets, setTotalAssets] = useState(0);
   const [cashFlowDetails, setCashFlowDetails] = useState([] as any[]);
   const [profitDetails, setProfitDetails] = useState([] as any[]);
+  const [cashFilter, setCashFilter] = useState(0);
+  const [profitFilter, setProfitFilter] = useState(0);
+  const filterData = (data: any[], type: number) => {
+    if (type === 1)
+      //@ts-ignore
+      return data.filter((item) => new Date(item._id) > subtractYears(1));
+    else if (type === 2)
+      //@ts-ignore
+      return data.filter((item) => new Date(item._id) > subtractMonths(6));
+    else if (type === 3)
+      //@ts-ignore
+      return data.filter((item) => new Date(item._id) > subtractMonths(1));
+    return data;
+  };
   const user = useAppSelector((state) => selectUser(state));
 
   useEffect(() => {
     API.getDataSummary(user._id).then((result) => {
-      // if (result.cashFlowSummary.length > 0) {
-      //   if (result.cashFlowSummary[0]._id === "Inflow") {
-      //     setTotalInflow(result.cashFlowSummary[0].total);
-      //     setTotalOutflow(result.cashFlowSummary[1].total);
-      //   } else {
-      //     setTotalInflow(result.cashFlowSummary[1].total);
-      //     setTotalOutflow(result.cashFlowSummary[0].total);
-      //   }
-      // }
       if (result.assetSummary.length > 0)
         setTotalAssets(result.assetSummary[0].total);
       setTotalInflow(getTotalFromSummary(result.cashFlowSummary, "Inflow"));
@@ -124,55 +134,93 @@ function Dashboard() {
       </Box>
 
       <Box display={"flex"} maxWidth="100%">
-        <Box minHeight={400} flex="0.5">
+        <Box minHeight={400} flex="0.5" display={"flex"} flexDirection="column">
           <Bar
             options={options}
             data={{
-              labels: cashFlowDetails.map((item) => monthFormat(item._id)),
+              labels: filterData(cashFlowDetails, cashFilter).map((item) =>
+                monthFormat(item._id)
+              ),
               datasets: [
                 {
                   label: "Cash Inflow",
-                  data: cashFlowDetails.map((item) =>
+                  data: filterData(cashFlowDetails, cashFilter).map((item) =>
                     getAmountFromDataset(item.result, "Inflow")
                   ),
-                  backgroundColor: cashFlowDetails.map((item) => blue[500]),
+                  backgroundColor: filterData(cashFlowDetails, cashFilter).map(
+                    (item) => blue[500]
+                  ),
                   minBarLength: 2,
                 },
                 {
                   label: "Cash Outflow",
-                  data: cashFlowDetails.map((item) =>
+                  data: filterData(cashFlowDetails, cashFilter).map((item) =>
                     getAmountFromDataset(item.result, "Outflow")
                   ),
 
-                  backgroundColor: cashFlowDetails.map((item) => orange[500]),
+                  backgroundColor: filterData(cashFlowDetails, cashFilter).map(
+                    (item) => orange[500]
+                  ),
                   minBarLength: 2,
                 },
               ],
             }}
           />
+          <Autocomplete
+            disablePortal
+            options={cashFilterOptions}
+            sx={{ width: 300, margin: 1, boxShadow: 1 }}
+            value={cashFilterOptions[cashFilter]}
+            onInputChange={(event, value) =>
+              setCashFilter(
+                cashFilterOptions.findIndex((item) => item === value)
+              )
+            }
+            renderInput={(params) => (
+              <TextField {...params} variant="filled" label="Select Filter" />
+            )}
+          />
         </Box>
-        <Box minHeight={400} flex="0.5">
+        <Box minHeight={400} flex="0.5" display={"flex"} flexDirection="column">
           <Bar
             options={profitOptions}
             data={{
-              labels: profitDetails.map((item) => monthFormat(item._id)),
+              labels: filterData(profitDetails, profitFilter).map((item) =>
+                monthFormat(item._id)
+              ),
               datasets: [
                 {
                   label: "Profit",
-                  data: profitDetails.map((item) =>
+                  data: filterData(profitDetails, profitFilter).map((item) =>
                     getProfitFromData(item.result)
                   ),
-                  backgroundColor: profitDetails.map((item) => {
-                    if (getProfitFromData(item.result) > 0) {
-                      return green[500];
-                    } else {
-                      return red[500];
+                  backgroundColor: filterData(profitDetails, profitFilter).map(
+                    (item) => {
+                      if (getProfitFromData(item.result) > 0) {
+                        return green[500];
+                      } else {
+                        return red[500];
+                      }
                     }
-                  }),
+                  ),
                   minBarLength: 2,
                 },
               ],
             }}
+          />
+          <Autocomplete
+            disablePortal
+            options={profitFilterOptions}
+            sx={{ width: 300, margin: 1, boxShadow: 1 }}
+            value={profitFilterOptions[profitFilter]}
+            onInputChange={(event, value) =>
+              setProfitFilter(
+                profitFilterOptions.findIndex((item) => item === value)
+              )
+            }
+            renderInput={(params) => (
+              <TextField {...params} variant="filled" label="Select Filter" />
+            )}
           />
         </Box>
       </Box>

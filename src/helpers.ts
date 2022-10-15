@@ -82,3 +82,15 @@ export const getProfitFromData = (result: any[]): number => {
   }
   return inflow.amount - outflow.amount - asset.amount;
 };
+
+export function subtractYears(numOfYears: number, date = new Date()) {
+  date.setFullYear(date.getFullYear() - numOfYears);
+
+  return date;
+}
+
+export function subtractMonths(numOfMonths: number, date = new Date()) {
+  date.setMonth(date.getMonth() - numOfMonths);
+
+  return date;
+}
