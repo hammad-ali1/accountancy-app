@@ -1,9 +1,9 @@
 import axiosCreator from "axios";
 import { BASE_URL } from "../config";
+import { yyyyMMddFormat } from "../helpers";
 const axios = axiosCreator.create({
   baseURL: BASE_URL,
 });
-
 //TYPES
 
 export class AccountancyUser {
@@ -50,6 +50,7 @@ type Summary = {
   cashFlowDetail: any;
   assetDetail: any;
   assetSummary: any;
+  profitDetail: any;
 };
 const API = {
   signUp: async (user: AccountancyUser): Promise<AccountancyUser> => {
@@ -77,6 +78,10 @@ const API = {
     ).data;
   },
   addTransaction: async (transaction: Transaction): Promise<Transaction> => {
+    transaction.dateOfTransaction = new Date(
+      new Date(transaction.dateOfTransaction).toDateString()
+    );
+    console.log(transaction);
     return await (
       await axios.post(`transactions/add`, transaction)
     ).data;
@@ -93,6 +98,8 @@ const API = {
   },
 
   addAsset: async (asset: Asset): Promise<Asset> => {
+    console.log(asset);
+    asset.acquiredDate = new Date(new Date(asset.acquiredDate).toDateString());
     return await (
       await axios.post(`assets/add`, asset)
     ).data;
