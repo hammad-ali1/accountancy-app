@@ -3,8 +3,17 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "../app/hooks";
 import { selectUser } from "../slices/userSlice";
 import { Typography, Box } from "@mui/material";
-import { orange, blue, green, red } from "@mui/material/colors";
+import {
+  orange,
+  blue,
+  green,
+  red,
+  grey,
+  lightBlue,
+} from "@mui/material/colors";
 import { Bar } from "react-chartjs-2";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import {
   monthFormat,
   getAmountFromDataset,
@@ -85,57 +94,88 @@ function Dashboard() {
   }, [user]);
   return (
     <Box>
-      <Typography>Total Inflow : {totalInflow}</Typography>
-      <Typography>Total Outflow : {totalOutflow}</Typography>
-      <Typography>
-        Main Balance : {totalInflow - totalOutflow - totalAssets}
-      </Typography>
-      <Bar
-        options={options}
-        data={{
-          labels: cashFlowDetails.map((item) => monthFormat(item._id)),
-          datasets: [
-            {
-              label: "Cash Inflow",
-              data: cashFlowDetails.map((item) =>
-                getAmountFromDataset(item.result, "Inflow")
-              ),
-              backgroundColor: cashFlowDetails.map((item) => blue[500]),
-              minBarLength: 2,
-            },
-            {
-              label: "Cash Outflow",
-              data: cashFlowDetails.map((item) =>
-                getAmountFromDataset(item.result, "Outflow")
-              ),
+      <Box display={"flex"} justifyContent="space-between" padding={1}>
+        <Box>
+          <Box display={"flex"} color={green[500]}>
+            <ArrowDropUpIcon />
+            <Typography>Total Inflow &nbsp;&nbsp; : ${totalInflow}</Typography>
+          </Box>
+          <Box display={"flex"} color={red[500]}>
+            <ArrowDropDownIcon />
+            <Typography>Total Outflow : -${totalOutflow}</Typography>
+          </Box>
+        </Box>
+        <Box>
+          <Box
+            color={
+              totalInflow - totalOutflow - totalAssets > 0
+                ? lightBlue[500]
+                : red[500]
+            }
+          >
+            <Typography>
+              Main Balance : ${totalInflow - totalOutflow - totalAssets}
+            </Typography>
+          </Box>
+          <Box color={grey[500]}>
+            <Typography>Assets Bought : ${totalAssets}</Typography>
+          </Box>
+        </Box>
+      </Box>
 
-              backgroundColor: cashFlowDetails.map((item) => orange[500]),
-              minBarLength: 2,
-            },
-          ],
-        }}
-      />
+      <Box display={"flex"} maxWidth="100%">
+        <Box minHeight={400} flex="0.5">
+          <Bar
+            options={options}
+            data={{
+              labels: cashFlowDetails.map((item) => monthFormat(item._id)),
+              datasets: [
+                {
+                  label: "Cash Inflow",
+                  data: cashFlowDetails.map((item) =>
+                    getAmountFromDataset(item.result, "Inflow")
+                  ),
+                  backgroundColor: cashFlowDetails.map((item) => blue[500]),
+                  minBarLength: 2,
+                },
+                {
+                  label: "Cash Outflow",
+                  data: cashFlowDetails.map((item) =>
+                    getAmountFromDataset(item.result, "Outflow")
+                  ),
 
-      <Bar
-        options={profitOptions}
-        data={{
-          labels: profitDetails.map((item) => monthFormat(item._id)),
-          datasets: [
-            {
-              label: "Profit",
-              data: profitDetails.map((item) => getProfitFromData(item.result)),
-              backgroundColor: profitDetails.map((item) => {
-                if (getProfitFromData(item.result) > 0) {
-                  return green[500];
-                } else {
-                  return red[500];
-                }
-              }),
-              minBarLength: 2,
-            },
-          ],
-        }}
-      />
+                  backgroundColor: cashFlowDetails.map((item) => orange[500]),
+                  minBarLength: 2,
+                },
+              ],
+            }}
+          />
+        </Box>
+        <Box minHeight={400} flex="0.5">
+          <Bar
+            options={profitOptions}
+            data={{
+              labels: profitDetails.map((item) => monthFormat(item._id)),
+              datasets: [
+                {
+                  label: "Profit",
+                  data: profitDetails.map((item) =>
+                    getProfitFromData(item.result)
+                  ),
+                  backgroundColor: profitDetails.map((item) => {
+                    if (getProfitFromData(item.result) > 0) {
+                      return green[500];
+                    } else {
+                      return red[500];
+                    }
+                  }),
+                  minBarLength: 2,
+                },
+              ],
+            }}
+          />
+        </Box>
+      </Box>
     </Box>
   );
 }
