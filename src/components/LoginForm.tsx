@@ -19,6 +19,8 @@ import {
 } from "@mui/icons-material";
 import { RoundedButton } from "../theme/styledComponents";
 import useLogin from "../hooks/useLogin";
+import Loader from "./Loader";
+import CustomizedSnackbars from "./Snackbar";
 //Redux
 import { useAppDispatch } from "../app/hooks";
 //Hooks
@@ -30,6 +32,10 @@ export default function LoginForm() {
     handleChange,
     handleClickShowPassword,
     submitErrorMessage,
+    isLoading,
+    openErrorSnack,
+    errorSnackMessage,
+    setOpenErrorSnack,
   } = useLogin();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const dispatch = useAppDispatch();
@@ -106,6 +112,13 @@ export default function LoginForm() {
         </Stack>
         <FormHelperText error>{submitErrorMessage}</FormHelperText>
       </FormControl>
+      <Loader isLoading={isLoading} />
+      <CustomizedSnackbars
+        isOpen={openErrorSnack}
+        text={errorSnackMessage}
+        severity="error"
+        setIsOpen={setOpenErrorSnack}
+      />
     </Box>
   );
 }

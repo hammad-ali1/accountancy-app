@@ -16,6 +16,9 @@ function useLogin() {
     showPassword: false,
   });
   const [submitErrorMessage, setSubmitErrorMessage] = useState("");
+  const [openErrorSnack, setOpenErrorSnack] = useState(false);
+  const [errorSnackMessage, setErrorSnackMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useAppDispatch();
 
   const handleChange =
@@ -30,16 +33,22 @@ function useLogin() {
   };
 
   const handleFormSubmit = async () => {
-    console.log("Loggin in", values);
     if (values.username && values.password) {
+      let result;
       try {
-        const result = await API.logIn(values.username, values.password);
+        setIsLoading(true);
+        result = await API.logIn(values.username, values.password);
+        setIsLoading(false);
         console.log(result);
         dispatch(setUser(result));
         navigator("/OTP", { replace: true });
-      } catch (err) {
+      } catch (err: any) {
+        setIsLoading(false);
         console.log(err);
-        setSubmitErrorMessage("username or password is wrong");
+        setErrorSnackMessage(
+          err.response.data ? err.response.data.message : err.message
+        );
+        setOpenErrorSnack(true);
       }
     } else {
       setSubmitErrorMessage("Please fill all fields");
@@ -52,6 +61,10 @@ function useLogin() {
     handleClickShowPassword,
     values,
     submitErrorMessage,
+    isLoading,
+    openErrorSnack,
+    errorSnackMessage,
+    setOpenErrorSnack,
   };
 }
 
