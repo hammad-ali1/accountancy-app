@@ -1,5 +1,5 @@
 import API, { Transaction } from "../api/auth";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAppSelector } from "../app/hooks";
 import { selectUser } from "../slices/userSlice";
 
@@ -7,7 +7,11 @@ function useTransactionForm(initialData: Transaction) {
   const user = useAppSelector((state) => selectUser(state));
   const [values, setValues] = useState<Transaction>(initialData);
   const [submitErrorMessage, setSubmitErrorMessage] = useState("");
-  const [submitSuccess, setSubmitSuccess] = useState("");
+  const [openErrorSnack, setOpenErrorSnack] = useState(false);
+  const [errorSnackMessage, setErrorSnackMessage] = useState("");
+  const [openSuccessSnack, setOpenSuccessSnack] = useState(false);
+  const [sucessSnackMessage, setSuccessSnackMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange =
     (prop: keyof Transaction) =>
@@ -20,9 +24,7 @@ function useTransactionForm(initialData: Transaction) {
     };
 
   const handleFormSubmit = async () => {
-    console.log(values);
     if (!user._id) {
-      setSubmitSuccess("");
       return setSubmitErrorMessage("you are not logged in");
     }
     if (
@@ -36,21 +38,25 @@ function useTransactionForm(initialData: Transaction) {
       )
     ) {
       console.log(values);
-      setSubmitSuccess("");
       return setSubmitErrorMessage("Please fill all fields");
     }
 
     try {
-      setSubmitErrorMessage("");
-      setSubmitSuccess("Transaction added");
       const valuesWithUserId: Transaction = structuredClone(values);
       valuesWithUserId.user = user._id;
+      setSubmitErrorMessage("");
+      setIsLoading(true);
+      setOpenSuccessSnack(true);
+      setSuccessSnackMessage("Transaction Added Successfully");
       const result = await API.addTransaction(valuesWithUserId);
-    } catch (err) {
+      setIsLoading(false);
+    } catch (err: any) {
+      setIsLoading(false);
       console.log(err);
-      setSubmitSuccess("");
-
-      setSubmitErrorMessage("error occurred");
+      setErrorSnackMessage(
+        err.response.data ? err.response.data.message : err.message
+      );
+      setOpenErrorSnack(true);
     }
   };
 
@@ -59,7 +65,13 @@ function useTransactionForm(initialData: Transaction) {
     handleFormSubmit,
     values,
     submitErrorMessage,
-    submitSuccess,
+    errorSnackMessage,
+    sucessSnackMessage,
+    isLoading,
+    setOpenErrorSnack,
+    openErrorSnack,
+    openSuccessSnack,
+    setOpenSuccessSnack,
     handleChangeAutoComplete,
     setValues,
   };

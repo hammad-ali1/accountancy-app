@@ -1,21 +1,19 @@
 import API, { AccountancyUser } from "../api/auth";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "../app/hooks";
-import { setUser } from "../slices/userSlice";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { doesObjContainEmptyFields } from "../helpers";
 
 class FormFields extends AccountancyUser {
   showPassword: boolean = false;
   confirmPassword: string = "";
 }
 function useSignUp() {
-  const navigator = useNavigate();
   const [values, setValues] = useState(new FormFields());
   const [submitErrorMessage, setSubmitErrorMessage] = useState("");
-  const [submitSuccess, setSubmitSuccess] = useState("");
-
-  const dispatch = useAppDispatch();
+  const [openErrorSnack, setOpenErrorSnack] = useState(false);
+  const [errorSnackMessage, setErrorSnackMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [openSuccessSnack, setOpenSuccessSnack] = useState(false);
+  const [sucessSnackMessage, setSuccessSnackMessage] = useState("");
 
   const handleChange =
     (prop: keyof FormFields) =>
@@ -30,8 +28,6 @@ function useSignUp() {
   };
 
   const handleFormSubmit = async () => {
-    console.log(values);
-
     if (values.password !== values.confirmPassword)
       return setSubmitErrorMessage("password does not match");
     if (
@@ -52,12 +48,19 @@ function useSignUp() {
       const input = { ...values };
       //@ts-ignore
       delete input._id;
+      setIsLoading(true);
       const result = await API.signUp(values);
       console.log(result);
-      setSubmitSuccess("Account Created Successfully");
+      setIsLoading(false);
+      setOpenSuccessSnack(true);
+      setSuccessSnackMessage("Account Created Successfully");
     } catch (err: any) {
+      setIsLoading(false);
       console.log(err);
-      setSubmitErrorMessage(err.message);
+      setErrorSnackMessage(
+        err.response.data ? err.response.data.message : err.message
+      );
+      setOpenErrorSnack(true);
     }
   };
 
@@ -67,7 +70,13 @@ function useSignUp() {
     handleClickShowPassword,
     values,
     submitErrorMessage,
-    submitSuccess,
+    errorSnackMessage,
+    sucessSnackMessage,
+    isLoading,
+    setOpenErrorSnack,
+    openErrorSnack,
+    openSuccessSnack,
+    setOpenSuccessSnack,
   };
 }
 

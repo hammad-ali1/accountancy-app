@@ -1,11 +1,14 @@
 import API, { Asset } from "../api/auth";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { doesObjContainEmptyFields } from "../helpers";
 function useTransactionForm(initialData: Asset) {
   const [values, setValues] = useState<Asset>(initialData);
   const [submitErrorMessage, setSubmitErrorMessage] = useState("");
-  const [submitSuccess, setSubmitSuccess] = useState("");
-
+  const [openErrorSnack, setOpenErrorSnack] = useState(false);
+  const [errorSnackMessage, setErrorSnackMessage] = useState("");
+  const [openSuccessSnack, setOpenSuccessSnack] = useState(false);
+  const [sucessSnackMessage, setSuccessSnackMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const handleChange =
     (prop: keyof Asset) => (event: React.ChangeEvent<HTMLInputElement>) => {
       setValues({ ...values, [prop]: event.target.value });
@@ -16,24 +19,25 @@ function useTransactionForm(initialData: Asset) {
     };
 
   const handleFormSubmit = async () => {
-    console.log(values);
-
     if (doesObjContainEmptyFields(values)) {
       console.log(values);
-      setSubmitSuccess("");
       return setSubmitErrorMessage("Please fill all fields");
     }
-
     try {
       setSubmitErrorMessage("");
-      setSubmitSuccess("Asset added");
+      setIsLoading(true);
+      setOpenSuccessSnack(true);
+      setSuccessSnackMessage("Asset Added Successfully");
 
       const result = await API.addAsset(values);
-    } catch (err) {
+      setIsLoading(false);
+    } catch (err: any) {
+      setIsLoading(false);
       console.log(err);
-      setSubmitSuccess("");
-
-      setSubmitErrorMessage("error occurred");
+      setErrorSnackMessage(
+        err.response.data ? err.response.data.message : err.message
+      );
+      setOpenErrorSnack(true);
     }
   };
 
@@ -42,7 +46,13 @@ function useTransactionForm(initialData: Asset) {
     handleFormSubmit,
     values,
     submitErrorMessage,
-    submitSuccess,
+    errorSnackMessage,
+    sucessSnackMessage,
+    isLoading,
+    setOpenErrorSnack,
+    openErrorSnack,
+    openSuccessSnack,
+    setOpenSuccessSnack,
     handleChangeAutoComplete,
     setValues,
   };

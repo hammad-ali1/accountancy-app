@@ -1,7 +1,6 @@
 import useTransactionForm from "../hooks/useTransactionForm";
 import { useEffect } from "react";
 import {
-  Button as MUIButton,
   Box,
   Typography,
   Stack,
@@ -13,6 +12,7 @@ import {
   useTheme,
   Autocomplete,
 } from "@mui/material";
+import CustomizedSnackbars from "./Snackbar";
 import { DateRange } from "@mui/icons-material";
 import { RoundedButton } from "../theme/styledComponents";
 import { Transaction } from "../api/auth";
@@ -28,7 +28,12 @@ function AddTransaction(props: AddTransactionProps) {
     handleFormSubmit,
     values,
     submitErrorMessage,
-    submitSuccess,
+    sucessSnackMessage,
+    setOpenErrorSnack,
+    openErrorSnack,
+    openSuccessSnack,
+    setOpenSuccessSnack,
+    errorSnackMessage,
     setValues,
   } = useTransactionForm(new Transaction());
   useEffect(() => {
@@ -123,8 +128,20 @@ function AddTransaction(props: AddTransactionProps) {
           </RoundedButton>
         </Stack>
         <FormHelperText error>{submitErrorMessage}</FormHelperText>
-        <FormHelperText>{submitSuccess}</FormHelperText>
       </FormControl>
+
+      <CustomizedSnackbars
+        isOpen={openErrorSnack}
+        text={errorSnackMessage}
+        severity="error"
+        setIsOpen={setOpenErrorSnack}
+      />
+      <CustomizedSnackbars
+        isOpen={openSuccessSnack}
+        text={sucessSnackMessage}
+        severity="success"
+        setIsOpen={setOpenSuccessSnack}
+      />
     </Box>
   );
 }

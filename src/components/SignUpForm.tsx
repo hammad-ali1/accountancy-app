@@ -22,6 +22,8 @@ import {
 } from "@mui/icons-material";
 import { RoundedButton } from "../theme/styledComponents";
 import useSignUp from "../hooks/useSignUp";
+import CustomizedSnackbars from "./Snackbar";
+import Loader from "./Loader";
 //Redux
 import { useAppDispatch } from "../app/hooks";
 //Hooks
@@ -34,7 +36,13 @@ export default function SignUpForm() {
     handleClickShowPassword,
     handleFormSubmit,
     submitErrorMessage,
-    submitSuccess,
+    errorSnackMessage,
+    sucessSnackMessage,
+    isLoading,
+    setOpenErrorSnack,
+    openErrorSnack,
+    openSuccessSnack,
+    setOpenSuccessSnack,
   } = useSignUp();
 
   const handleMouseDownPassword = (
@@ -251,8 +259,21 @@ export default function SignUpForm() {
           </RoundedButton>
         </Stack>
         <FormHelperText error>{submitErrorMessage}</FormHelperText>
-        <FormHelperText>{submitSuccess}</FormHelperText>
       </FormControl>
+      <Loader isLoading={isLoading} />
+      <CustomizedSnackbars
+        isOpen={openErrorSnack}
+        text={errorSnackMessage}
+        severity="error"
+        setIsOpen={setOpenErrorSnack}
+      />
+
+      <CustomizedSnackbars
+        isOpen={openSuccessSnack}
+        text={sucessSnackMessage}
+        severity="success"
+        setIsOpen={setOpenSuccessSnack}
+      />
     </Box>
   );
 }

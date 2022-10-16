@@ -1,7 +1,6 @@
 import useAssetForm from "../hooks/useAssetForm";
 import { useEffect } from "react";
 import {
-  Button as MUIButton,
   Box,
   Typography,
   Stack,
@@ -19,6 +18,8 @@ import { Asset } from "../api/auth";
 import { yyyyMMddFormat } from "../helpers";
 import { useAppSelector } from "../app/hooks";
 import { selectUser } from "../slices/userSlice";
+import CustomizedSnackbars from "./Snackbar";
+
 type AddAssetProps = {
   submitHandler?: () => void;
   initialData?: Asset;
@@ -33,7 +34,12 @@ function AddAsset(props: AddAssetProps) {
     handleFormSubmit,
     values,
     submitErrorMessage,
-    submitSuccess,
+    errorSnackMessage,
+    sucessSnackMessage,
+    setOpenErrorSnack,
+    openErrorSnack,
+    openSuccessSnack,
+    setOpenSuccessSnack,
     setValues,
   } = useAssetForm(initialAsset);
   useEffect(() => {
@@ -142,7 +148,7 @@ function AddAsset(props: AddAssetProps) {
             value={values.inurance}
             onInputChange={handleChangeAutoComplete("inurance")}
             renderInput={(params) => (
-              <TextField {...params} label="Isnurance" />
+              <TextField {...params} label="Insurance" />
             )}
           />
           <RoundedButton
@@ -155,8 +161,20 @@ function AddAsset(props: AddAssetProps) {
           </RoundedButton>
         </Stack>
         <FormHelperText error>{submitErrorMessage}</FormHelperText>
-        <FormHelperText>{submitSuccess}</FormHelperText>
       </FormControl>
+
+      <CustomizedSnackbars
+        isOpen={openErrorSnack}
+        text={errorSnackMessage}
+        severity="error"
+        setIsOpen={setOpenErrorSnack}
+      />
+      <CustomizedSnackbars
+        isOpen={openSuccessSnack}
+        text={sucessSnackMessage}
+        severity="success"
+        setIsOpen={setOpenSuccessSnack}
+      />
     </Box>
   );
 }

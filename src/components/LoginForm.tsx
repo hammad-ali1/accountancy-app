@@ -1,5 +1,4 @@
 import {
-  Button as MUIButton,
   Box,
   Typography,
   IconButton,
@@ -19,10 +18,8 @@ import {
 } from "@mui/icons-material";
 import { RoundedButton } from "../theme/styledComponents";
 import useLogin from "../hooks/useLogin";
-import Loader from "./Loader";
 import CustomizedSnackbars from "./Snackbar";
-//Redux
-import { useAppDispatch } from "../app/hooks";
+import Loader from "./Loader";
 //Hooks
 export default function LoginForm() {
   const theme = useTheme();
@@ -38,7 +35,6 @@ export default function LoginForm() {
     setOpenErrorSnack,
   } = useLogin();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const dispatch = useAppDispatch();
 
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
