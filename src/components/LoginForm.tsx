@@ -9,6 +9,7 @@ import {
   FormHelperText,
   useMediaQuery,
   useTheme,
+  Button as MUIButton,
 } from "@mui/material";
 import {
   AccountCircle,
@@ -20,9 +21,10 @@ import { RoundedButton } from "../theme/styledComponents";
 import useLogin from "../hooks/useLogin";
 import CustomizedSnackbars from "./Snackbar";
 import Loader from "./Loader";
-
+import { useNavigate } from "react-router-dom";
 export default function LoginForm() {
   const theme = useTheme();
+  const navigator = useNavigate();
   const {
     values,
     handleFormSubmit,
@@ -108,6 +110,15 @@ export default function LoginForm() {
         </Stack>
         <FormHelperText error>{submitErrorMessage}</FormHelperText>
       </FormControl>
+      <Stack direction="row" justifyContent="center">
+        <Typography>Forgot Password?</Typography>
+        <MUIButton
+          style={{ padding: "0", marginLeft: "4px" }}
+          onClick={() => navigator("/reset", { replace: true })}
+        >
+          Click Here!
+        </MUIButton>
+      </Stack>
       <Loader isLoading={isLoading} />
       <CustomizedSnackbars
         isOpen={openErrorSnack}

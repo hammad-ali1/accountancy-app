@@ -76,4 +76,3 @@ function OTP() {
 }
 
 export default OTP;
-<div>OTP</div>;

@@ -119,6 +119,11 @@ const API = {
       await axios.get(`transactions/sum/${user}`)
     ).data;
   },
+  sendResetPasswordMail: async (user: string) => {
+    return await (
+      await axios.get(`users/reset/${user}`)
+    ).data.user;
+  },
 };
 
 export default API;
