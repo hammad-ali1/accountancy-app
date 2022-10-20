@@ -25,6 +25,7 @@ import useSignUp from "../hooks/useSignUp";
 import CustomizedSnackbars from "./Snackbar";
 import Loader from "./Loader";
 //Redux
+import { yyyyMMddFormat } from "../helpers";
 import { useAppDispatch } from "../app/hooks";
 //Hooks
 export default function SignUpForm() {
@@ -220,7 +221,7 @@ export default function SignUpForm() {
           <FormControl>
             <TextField
               id="DOB"
-              value={values.DOB}
+              value={yyyyMMddFormat(values.DOB)}
               onChange={handleChange("DOB")}
               label="Date Of Birth"
               type="date"
