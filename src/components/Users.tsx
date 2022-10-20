@@ -29,7 +29,7 @@ function Users() {
     { headerName: "User Name", field: "userName", maxWidth: 200 },
     { headerName: "First Name", field: "firstName", maxWidth: 200 },
     { headerName: "Last Name", field: "lastName", maxWidth: 200 },
-    { headerName: "Busimess Name", field: "businessName", maxWidth: 200 },
+    { headerName: "Business Name", field: "businessName", maxWidth: 200 },
     { headerName: "DOB", field: "DOB", maxWidth: 200 },
     { headerName: "Email", field: "email", maxWidth: 200 },
     { headerName: "Title", field: "title", maxWidth: 200 },
