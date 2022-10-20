@@ -48,6 +48,7 @@ function MenuItems() {
               Users
             </Item>
           )}
+          <Item onClick={() => navigate("/", { replace: true })}>Log Out</Item>
         </Stack>
       </Drawer>
       <IconButton sx={{ marginLeft: "auto" }} onClick={() => setOpen(true)}>
