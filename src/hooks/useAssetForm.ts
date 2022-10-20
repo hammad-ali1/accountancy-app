@@ -1,6 +1,9 @@
 import API, { Asset } from "../api/auth";
 import { useState } from "react";
 import { doesObjContainEmptyFields } from "../helpers";
+
+//custom hook for asset form
+//with functionalites of adding and deletig asset
 function useTransactionForm(initialData: Asset) {
   const [values, setValues] = useState<Asset>(initialData);
   const [submitErrorMessage, setSubmitErrorMessage] = useState("");

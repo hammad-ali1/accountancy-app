@@ -1,17 +1,14 @@
-import { useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./GlobalClasses.css";
 //Screens
 import Authentication from "./screens/Authentication";
 import OTP from "./screens/OTP";
 import Home from "./screens/Home";
-//Redux
-import { useAppDispatch } from "./app/hooks";
-
 //MuiTheme
 import theme from "./theme/muitheme";
-import { ThemeProvider, CssBaseline, Stack } from "@mui/material";
+import { ThemeProvider, CssBaseline } from "@mui/material";
 
+//Main entry point of the App
 function App() {
   return (
     <ThemeProvider theme={theme}>

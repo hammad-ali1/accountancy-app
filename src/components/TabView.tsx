@@ -8,7 +8,7 @@ interface TabPanelProps {
   index: number;
   value: number;
 }
-
+//This component provides tabbed functionality in Authentication Screen
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 

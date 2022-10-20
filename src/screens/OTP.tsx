@@ -13,6 +13,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { green, grey } from "@mui/material/colors";
+
+//OTP screen
 function OTP() {
   const navigator = useNavigate();
   const user = useAppSelector((state) => selectUser(state));

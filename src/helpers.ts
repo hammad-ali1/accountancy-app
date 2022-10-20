@@ -1,5 +1,5 @@
 export {};
-
+//convert date in suitable format
 export const yyyyMMddFormat = (dateString: string | Date) => {
   const date = new Date(dateString);
 
@@ -13,6 +13,7 @@ export const yyyyMMddFormat = (dateString: string | Date) => {
   return formattedDate;
 };
 
+//convert date to month format
 export const monthFormat = (dateString: string | Date) => {
   const date = new Date(dateString);
   // Get year, month, and day part from the date
@@ -25,6 +26,7 @@ export const monthFormat = (dateString: string | Date) => {
   return formattedDate;
 };
 
+//function to check if object has an empty string
 export const doesObjContainEmptyFields = (obj: any) => {
   return Object.values(obj).some((value) => {
     if (typeof value === "string" && value === "") return true;
@@ -32,6 +34,7 @@ export const doesObjContainEmptyFields = (obj: any) => {
   });
 };
 
+//get inflow or outflow from a dataset
 export const getAmountFromDataset = (
   result: any[],
   type: "Inflow" | "Outflow"
@@ -46,6 +49,7 @@ export const getAmountFromDataset = (
   return 0;
 };
 
+//get totals from result
 export const getTotalFromSummary = (
   result: any[],
   type: "Inflow" | "Outflow"

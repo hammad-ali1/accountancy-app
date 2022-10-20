@@ -1,5 +1,7 @@
 import * as React from "react";
 import { Typography } from "@mui/material";
+
+//component for displaying time in header component
 export default function Time() {
   const [time, setTime] = React.useState("");
 

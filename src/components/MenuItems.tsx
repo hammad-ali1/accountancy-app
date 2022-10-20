@@ -4,16 +4,7 @@ import { selectUser } from "../slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
-import {
-  Drawer,
-  IconButton,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Stack,
-  Divider,
-} from "@mui/material";
+import { Drawer, IconButton, Stack, Divider } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 function MenuItems() {
   const user = useAppSelector((state) => selectUser(state));

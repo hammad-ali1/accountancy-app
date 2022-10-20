@@ -17,6 +17,7 @@ type SnackBarProps = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
+//Success or Error message alerts
 export default function CustomizedSnackbars(props: SnackBarProps) {
   const handleClose = (
     event?: React.SyntheticEvent | Event,

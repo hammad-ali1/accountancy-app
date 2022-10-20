@@ -21,6 +21,8 @@ type AddTransactionProps = {
   submitHandler?: () => void;
   initialData?: Transaction;
 };
+//Transaction form component
+
 function AddTransaction(props: AddTransactionProps) {
   const {
     handleChangeAutoComplete,

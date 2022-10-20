@@ -12,6 +12,8 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import PopUp from "./PopUp";
 import AddAsset from "./AddAsset";
 
+//Assets table component
+
 function Assets() {
   const user = useAppSelector((state) => selectUser(state));
   const [loading, setLoading] = useState(false);

@@ -4,6 +4,7 @@ import SignUpForm from "../components/SignUpForm";
 import TabView from "../components/TabView";
 import SignUpImage from "../assets/signup.jpg";
 
+//Login and SignUp Screen
 function Authentication() {
   return (
     <Stack direction="row" padding="10px">

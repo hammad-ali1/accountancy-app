@@ -8,7 +8,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-
+//Users table
 function Users() {
   const user = useAppSelector((state) => selectUser(state));
   const [loading, setLoading] = useState(false);

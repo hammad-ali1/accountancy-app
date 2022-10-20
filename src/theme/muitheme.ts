@@ -1,6 +1,8 @@
 import { createTheme } from "@mui/material/styles";
-import { orange, lightBlue, grey, green } from "@mui/material/colors";
+import { orange, lightBlue, green } from "@mui/material/colors";
 import { Color } from "@mui/material";
+
+//MUI them module
 declare module "@mui/material/styles" {
   interface Theme extends ThemeOptions {}
   // allow configuration using `createTheme`

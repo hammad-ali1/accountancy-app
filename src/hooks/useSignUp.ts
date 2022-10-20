@@ -6,6 +6,8 @@ class FormFields extends AccountancyUser {
   showPassword: boolean = false;
   confirmPassword: string = "";
 }
+//custom hook for signup functonality
+
 function useSignUp() {
   const [values, setValues] = useState(new FormFields());
   const [submitErrorMessage, setSubmitErrorMessage] = useState("");

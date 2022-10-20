@@ -5,6 +5,7 @@ import MenuItems from "../components/MenuItems";
 import Time from "./Time";
 import { grey } from "@mui/material/colors";
 
+//header component of home screen
 function Header() {
   const user = useAppSelector((state) => selectUser(state));
 

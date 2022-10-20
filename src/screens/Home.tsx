@@ -1,4 +1,4 @@
-import { Stack, Box, Divider } from "@mui/material";
+import { Box } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
 import Users from "../components/Users";
 import Transactions from "../components/Transactions";
@@ -7,6 +7,7 @@ import Assets from "../components/Assets";
 import Header from "../components/Header";
 import AddAsset from "../components/AddAsset";
 import Dashboard from "../components/Dashboard";
+//Main screen
 function Home() {
   return (
     <Box style={{ height: "100vh" }}>

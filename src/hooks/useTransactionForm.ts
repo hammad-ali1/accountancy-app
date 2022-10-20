@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useAppSelector } from "../app/hooks";
 import { selectUser } from "../slices/userSlice";
 
+//custom hook for transaction form
+//with functionalites of adding and deletig transaction
 function useTransactionForm(initialData: Transaction) {
   const user = useAppSelector((state) => selectUser(state));
   const [values, setValues] = useState<Transaction>(initialData);

@@ -32,6 +32,7 @@ import {
   Legend,
 } from "chart.js";
 
+//registering chart js components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -41,6 +42,7 @@ ChartJS.register(
   Legend
 );
 
+//inflow outflow chart options
 const options = {
   responsive: true,
   plugins: {
@@ -53,7 +55,7 @@ const options = {
     },
   },
 };
-
+//profit loss chart options
 const profitOptions = {
   responsive: true,
   plugins: {
@@ -66,10 +68,11 @@ const profitOptions = {
     },
   },
 };
-
+//array of filters
 const cashFilterOptions = ["All", "Year", "Six Months", "Month"];
 const profitFilterOptions = ["All", "Year", "Six Months", "Month"];
 
+//dashboard component
 function Dashboard() {
   const [totalInflow, setTotalInflow] = useState(0);
   const [totalOutflow, setTotalOutflow] = useState(0);

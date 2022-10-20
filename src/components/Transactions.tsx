@@ -18,6 +18,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import PopUp from "./PopUp";
 import AddTransaction from "./AddTransaction";
+//Filter for months
 const months = [
   "All",
   "January",
@@ -33,8 +34,9 @@ const months = [
   "November",
   "December",
 ];
-
+//Filter for cash type
 const cashType = ["All", "Inflow", "Outflow"];
+//Transaction Table
 function Users() {
   const user = useAppSelector((state) => selectUser(state));
   const [loading, setLoading] = useState(false);

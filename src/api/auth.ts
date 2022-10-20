@@ -4,8 +4,7 @@ import { yyyyMMddFormat } from "../helpers";
 const axios = axiosCreator.create({
   baseURL: BASE_URL,
 });
-//TYPES
-
+//DATA TYPES OF RECORDS
 export class AccountancyUser {
   _id: string = "";
   userName: string = "";
@@ -52,6 +51,7 @@ type Summary = {
   assetSummary: any;
   profitDetail: any;
 };
+//API FUNCTIONS FOR DATA STORAGE AND RETRIEVAL
 const API = {
   signUp: async (user: AccountancyUser): Promise<AccountancyUser> => {
     return await (

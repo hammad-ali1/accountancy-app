@@ -20,7 +20,7 @@ import { RoundedButton } from "../theme/styledComponents";
 import useLogin from "../hooks/useLogin";
 import CustomizedSnackbars from "./Snackbar";
 import Loader from "./Loader";
-//Hooks
+
 export default function LoginForm() {
   const theme = useTheme();
   const {

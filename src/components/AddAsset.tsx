@@ -24,6 +24,8 @@ type AddAssetProps = {
   submitHandler?: () => void;
   initialData?: Asset;
 };
+
+//Asset form component
 function AddAsset(props: AddAssetProps) {
   const initialAsset = new Asset();
   const user = useAppSelector((state) => selectUser(state));

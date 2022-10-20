@@ -3,6 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../app/store";
 import { AccountancyUser } from "../api/auth";
 
+//redux slice for storing user object globally
 const initialState = new AccountancyUser();
 export const userSlice = createSlice({
   name: "user",
