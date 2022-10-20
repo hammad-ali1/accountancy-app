@@ -42,7 +42,7 @@ function useLogin() {
         setIsLoading(false);
         console.log(result);
         dispatch(setUser(result));
-        navigator("/OTP", { replace: true });
+        navigator("/OTP/none", { replace: true });
       } catch (err: any) {
         setIsLoading(false);
         console.log(err);

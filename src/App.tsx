@@ -5,6 +5,7 @@ import Authentication from "./screens/Authentication";
 import OTP from "./screens/OTP";
 import Home from "./screens/Home";
 import ResetPassword from "./components/ResetPassoword";
+import NewPassword from "./components/NewPassword";
 //MuiTheme
 import theme from "./theme/muitheme";
 import { ThemeProvider, CssBaseline } from "@mui/material";
@@ -15,9 +16,10 @@ function App() {
     <ThemeProvider theme={theme}>
       <Routes>
         <Route path="/" element={<Authentication />} />
-        <Route path="/OTP" element={<OTP />} />
+        <Route path="/OTP/:mode" element={<OTP />} />
         <Route path="/home/*" element={<Home />} />
         <Route path="/reset/*" element={<ResetPassword />} />
+        <Route path="/newpassword" element={<NewPassword />} />
       </Routes>
 
       <CssBaseline />

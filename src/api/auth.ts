@@ -124,6 +124,14 @@ const API = {
       await axios.get(`users/reset/${user}`)
     ).data.user;
   },
+  updatePassword: async (user: string, newPassword: string) => {
+    return await (
+      await axios.post(`users/newpassword`, {
+        userName: user,
+        password: newPassword,
+      })
+    ).data;
+  },
 };
 
 export default API;

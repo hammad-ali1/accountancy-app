@@ -27,7 +27,7 @@ function ResetPassword() {
   return (
     <div>
       <BackButton link="/" />
-      <Box width="100vw" height="100vh" display="flex" alignContent="center">
+      <Box width="100vw" height="80vh" display="flex" alignContent="center">
         <Stack
           width="400px"
           margin="auto"
@@ -64,7 +64,7 @@ function ResetPassword() {
                   setLoading(false);
                   console.log(user);
                   dispatch(setUser(user));
-                  navigator("/OTP", { replace: true });
+                  navigator("/OTP/newpassword", { replace: true });
                 })
                 .catch((err: any) => {
                   setLoading(false);
