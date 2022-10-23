@@ -35,7 +35,7 @@ function Users() {
     { headerName: "Title", field: "title", maxWidth: 200 },
 
     {
-      headerName: "Actions",
+      headerName: "",
       field: "userName",
       maxWidth: 150,
       cellRendererFramework: (params: any) => (

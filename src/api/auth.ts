@@ -24,7 +24,7 @@ export class Transaction {
   nameOfTransaction: string = "";
   dateOfTransaction: Date = new Date();
   inflowOrOutflow: "Inflow" | "Outflow" = "Inflow";
-  type: "Revenue" | "Other Options" = "Revenue";
+  type: string = "";
   fromOrTo: string = "";
   amount: string = "";
 }

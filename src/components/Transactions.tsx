@@ -99,7 +99,7 @@ function Users() {
     { headerName: "Amount", field: "amount", maxWidth: 200 },
 
     {
-      headerName: "Actions",
+      headerName: "",
       field: "_id",
       maxWidth: 150,
       cellRendererFramework: (params: any) => (

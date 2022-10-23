@@ -15,11 +15,16 @@ function useTransactionForm(initialData: Transaction) {
   const [sucessSnackMessage, setSuccessSnackMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleChange =
-    (prop: keyof Transaction) =>
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [prop]: event.target.value });
-    };
+  const handleChange = (prop: keyof Transaction) => {
+    if (prop === "amount") {
+      return (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValues({ ...values, [prop]: event.target.value });
+      };
+    } else
+      return (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValues({ ...values, [prop]: event.target.value });
+      };
+  };
   const handleChangeAutoComplete =
     (prop: keyof Transaction) => (event: any, value: string) => {
       setValues({ ...values, [prop]: value });

@@ -76,7 +76,7 @@ function Assets() {
     { headerName: "Insurance", field: "inurance", maxWidth: 200 },
 
     {
-      headerName: "Actions",
+      headerName: "",
       field: "_id",
       minWidth: 150,
       cellRendererFramework: (params: any) => (

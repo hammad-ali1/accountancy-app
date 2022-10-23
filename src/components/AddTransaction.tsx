@@ -54,7 +54,7 @@ function AddTransaction(props: AddTransactionProps) {
     >
       {!props.submitHandler && (
         <Typography className="blueHeading" variant="h5">
-          Add A Transaction
+          Add a transaction
         </Typography>
       )}
 
@@ -94,15 +94,11 @@ function AddTransaction(props: AddTransactionProps) {
             )}
           />
 
-          <Autocomplete
-            disablePortal
-            options={["Revenue", "Other Options"]}
+          <TextField
             value={values.type}
-            onInputChange={handleChangeAutoComplete("type")}
-            id="type"
-            renderInput={(params) => (
-              <TextField {...params} label="Type Of Transaction" />
-            )}
+            onChange={handleChange("type")}
+            label="Type Of Transaction"
+            type="text"
           />
 
           <TextField
@@ -119,6 +115,9 @@ function AddTransaction(props: AddTransactionProps) {
             label="Amount"
             type="number"
             variant="outlined"
+            InputProps={{
+              startAdornment: <div style={{ marginRight: "5px" }}>£</div>,
+            }}
           />
           <RoundedButton
             color="primary"

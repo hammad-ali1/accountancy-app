@@ -56,6 +56,16 @@ function useSignUp() {
       )
     )
       return setSubmitErrorMessage("Please fill all fields");
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email))
+      return setSubmitErrorMessage("Invalid Email Format");
+    if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+        values.password
+      )
+    )
+      return setSubmitErrorMessage(
+        "Password must be at least 8 characters with 1 number, uppercase letter and special character(@$!%*?&)"
+      );
     try {
       const input = { ...values };
       //@ts-ignore
@@ -63,6 +73,7 @@ function useSignUp() {
       setIsLoading(true);
       const result = await API.signUp(values);
       console.log(result);
+      setSubmitErrorMessage("");
       setIsLoading(false);
       setOpenSuccessSnack(true);
       setSuccessSnackMessage("Account Created Successfully");

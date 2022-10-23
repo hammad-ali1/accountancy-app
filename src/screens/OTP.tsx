@@ -46,7 +46,7 @@ function OTP() {
             fontFamily="monospace"
             variant="h5"
           >
-            ENTER OTP
+            TWO FACTOR AUTHENTICATION CODE
           </Typography>
           <Box
             color={green[500]}
@@ -74,7 +74,7 @@ function OTP() {
                   navigator("/home", { replace: true });
                 else navigator("/newpassword", { replace: true });
               } else {
-                setError("Invalid OTP");
+                setError("Invalid authentication code");
               }
             }}
           >

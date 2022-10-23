@@ -60,7 +60,7 @@ function AddAsset(props: AddAssetProps) {
     >
       {!props.submitHandler && (
         <Typography className="blueHeading" variant="h5">
-          Add An Asset
+          Add an asset
         </Typography>
       )}
 

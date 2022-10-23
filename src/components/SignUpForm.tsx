@@ -27,6 +27,7 @@ import Loader from "./Loader";
 //Redux
 import { yyyyMMddFormat } from "../helpers";
 import { useAppDispatch } from "../app/hooks";
+import { green } from "@mui/material/colors";
 //Hooks
 export default function SignUpForm() {
   const theme = useTheme();
@@ -105,33 +106,45 @@ export default function SignUpForm() {
             <FormHelperText></FormHelperText>
           </FormControl>
 
-          <TextField
-            id="password"
-            label="Password"
-            value={values.password}
-            onChange={handleChange("password")}
-            variant="standard"
-            type={values.showPassword ? "text" : "password"}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <LockRounded />
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
+          <FormControl>
+            <TextField
+              id="password"
+              label="Password"
+              value={values.password}
+              onChange={handleChange("password")}
+              variant="standard"
+              type={values.showPassword ? "text" : "password"}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockRounded />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            {/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+              values.password
+            ) ? (
+              <FormHelperText>Password is valid</FormHelperText>
+            ) : (
+              <FormHelperText>
+                Password must be at least 8 characters with 1 number, 1
+                uppercase letter and 1 special character(@$!%*?&)
+              </FormHelperText>
+            )}
+          </FormControl>
           <FormControl>
             <TextField
               id="confirmPassword"
