@@ -7,6 +7,7 @@ import Assets from "../components/Assets";
 import Header from "../components/Header";
 import AddAsset from "../components/AddAsset";
 import Dashboard from "../components/Dashboard";
+import EditUser from "../components/EditUser";
 //Main screen
 function Home() {
   return (
@@ -21,6 +22,7 @@ function Home() {
           <Route path="/addTransaction" element={<AddTransaction />} />
           <Route path="/asset" element={<Assets />} />
           <Route path="/addAsset" element={<AddAsset />} />
+          <Route path="/editUser" element={<EditUser />} />
         </Routes>
       </Box>
     </Box>

@@ -53,6 +53,11 @@ type Summary = {
 };
 //API FUNCTIONS FOR DATA STORAGE AND RETRIEVAL
 const API = {
+  updateUser: async (user: AccountancyUser): Promise<AccountancyUser> => {
+    return await (
+      await axios.post(`users/edit`, user)
+    ).data.user;
+  },
   signUp: async (user: AccountancyUser): Promise<AccountancyUser> => {
     return await (
       await axios.post(`users/signup`, user)

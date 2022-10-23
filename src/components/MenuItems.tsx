@@ -34,6 +34,9 @@ function MenuItems() {
           <Item onClick={() => navigate("/home/addAsset", { replace: true })}>
             Add Asset
           </Item>
+          <Item onClick={() => navigate("/home/editUser", { replace: true })}>
+            Edit Profile
+          </Item>
           {user && user.isAdmin && (
             <Item onClick={() => navigate("/home/users", { replace: true })}>
               Users
