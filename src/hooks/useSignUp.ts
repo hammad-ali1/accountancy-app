@@ -17,11 +17,21 @@ function useSignUp() {
   const [openSuccessSnack, setOpenSuccessSnack] = useState(false);
   const [sucessSnackMessage, setSuccessSnackMessage] = useState("");
 
-  const handleChange =
-    (prop: keyof FormFields) =>
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [prop]: event.target.value });
-    };
+  const handleChange = (prop: keyof FormFields) => {
+    if (prop === "firstName" || prop === "lastName")
+      return (event: React.ChangeEvent<HTMLInputElement>) => {
+        let newValue = "";
+        if (event.target.value !== "")
+          newValue =
+            event.target.value[0].toLocaleUpperCase() +
+            event.target.value.substring(1);
+        setValues({ ...values, [prop]: newValue });
+      };
+    else
+      return (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValues({ ...values, [prop]: event.target.value });
+      };
+  };
   const handleClickShowPassword = () => {
     setValues({
       ...values,
