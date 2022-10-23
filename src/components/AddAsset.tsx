@@ -87,20 +87,7 @@ function AddAsset(props: AddAssetProps) {
             type="text"
             variant="outlined"
           />
-          <TextField
-            value={values.location}
-            onChange={handleChange("location")}
-            label="Location In Business"
-            type="text"
-            variant="outlined"
-          />
-          <TextField
-            value={values.owner}
-            onChange={handleChange("owner")}
-            label="Owner"
-            type="text"
-            variant="outlined"
-          />
+
           <TextField
             value={yyyyMMddFormat(values.acquiredDate)}
             onChange={handleChange("acquiredDate")}
@@ -121,15 +108,11 @@ function AddAsset(props: AddAssetProps) {
             label="Price"
             type="number"
             variant="outlined"
+            InputProps={{
+              startAdornment: <div style={{ marginRight: "5px" }}>£</div>,
+            }}
           />
 
-          <TextField
-            value={values.currentValue}
-            onChange={handleChange("currentValue")}
-            label="Current Value"
-            type="number"
-            variant="outlined"
-          />
           <TextField
             value={values.manufacturer}
             onChange={handleChange("manufacturer")}
@@ -137,13 +120,7 @@ function AddAsset(props: AddAssetProps) {
             type="text"
             variant="outlined"
           />
-          <TextField
-            value={values.series}
-            onChange={handleChange("series")}
-            label="Series"
-            type="text"
-            variant="outlined"
-          />
+
           <Autocomplete
             disablePortal
             options={["yes", "no"]}

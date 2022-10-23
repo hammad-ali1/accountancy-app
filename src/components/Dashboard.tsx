@@ -131,7 +131,7 @@ function Dashboard() {
             </Typography>
           </Box>
           <Box color={grey[500]}>
-            <Typography>Assets Bought : ${totalAssets}</Typography>
+            <Typography>Total Cost of Assets : ${totalAssets}</Typography>
           </Box>
         </Box>
       </Box>

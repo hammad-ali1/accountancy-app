@@ -69,9 +69,7 @@ function Assets() {
     },
     { headerName: "Category", field: "category", maxWidth: 200 },
     { headerName: "Condition", field: "condition", maxWidth: 200 },
-    { headerName: "Location", field: "location", maxWidth: 200 },
     { headerName: "Price", field: "price", maxWidth: 200 },
-    { headerName: "Current Value", field: "currentValue", maxWidth: 200 },
     { headerName: "Manufacturer", field: "manufacturer", maxWidth: 200 },
     { headerName: "Insurance", field: "inurance", maxWidth: 200 },
 
