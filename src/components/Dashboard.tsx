@@ -77,7 +77,6 @@ const profitOptions = {
     },
     legend: {
       position: "top" as const,
-      display: false,
     },
     title: {
       display: true,
@@ -211,19 +210,17 @@ function Dashboard() {
               datasets: [
                 {
                   label: "Profit",
-                  data: filterData(profitDetails, profitFilter).map((item) =>
-                    getProfitFromData(item.result)
-                  ),
-                  backgroundColor: filterData(profitDetails, profitFilter).map(
-                    (item) => {
-                      if (getProfitFromData(item.result) > 0) {
-                        return green[500];
-                      } else {
-                        return red[500];
-                      }
-                    }
-                  ),
-                  minBarLength: 2,
+                  data: filterData(profitDetails, profitFilter)
+                    .map((item) => getProfitFromData(item.result))
+                    .map((item) => (item > 0 ? item : 0)),
+                  backgroundColor: green[500],
+                },
+                {
+                  label: "Loss",
+                  data: filterData(profitDetails, profitFilter)
+                    .map((item) => getProfitFromData(item.result))
+                    .map((item) => (item <= 0 ? item : 0)),
+                  backgroundColor: red[500],
                 },
               ],
             }}
