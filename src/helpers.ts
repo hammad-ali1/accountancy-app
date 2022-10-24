@@ -107,6 +107,15 @@ function monthKey(d: Date) {
   const year = date.toLocaleString("default", { year: "numeric" });
   return month + " " + year;
 }
+function sixMonthKey(d) {
+  let date = new Date(d);
+  const numMonth = date.toLocaleString("default", { month: "numeric" });
+
+  console.log(numMonth);
+  const year = date.toLocaleString("default", { year: "numeric" });
+  if (numMonth <= 6) return "Jan-Jul" + ", " + year;
+  else return "Aug-Dec" + ", " + year;
+}
 function yearKey(d: Date) {
   let date = new Date(d);
   const year = date.toLocaleString("default", { year: "numeric" });
@@ -136,7 +145,7 @@ export const profitDetailsByMonth = (arr) => {
     )
     .map((item) => {
       return {
-        date: monthKey(item.date),
+        date: item.date,
         profit: item.profit.reduce((partialSum, a) => partialSum + a, 0),
       };
     });
@@ -164,7 +173,35 @@ export const profitDetailsByYear = (arr) => {
     )
     .map((item) => {
       return {
-        date: yearKey(item.date),
+        date: item.date,
+        profit: item.profit.reduce((partialSum, a) => partialSum + a, 0),
+      };
+    });
+  console.log(newArr);
+  return newArr;
+};
+
+export const profitDetailsBySixMonths = (arr) => {
+  let newArr = arr.map((item) => {
+    return { date: sixMonthKey(item.date), profit: item.profit };
+  });
+  newArr = newArr.map((item) => {
+    return {
+      date: item.date,
+      profit: newArr
+        .filter((others) => others.date === item.date)
+        .map((item) => item.profit),
+    };
+  });
+  //get uniques
+  newArr = newArr
+    .filter(
+      (value, index, self) =>
+        index === self.findIndex((t) => t.date === value.date)
+    )
+    .map((item) => {
+      return {
+        date: item.date,
         profit: item.profit.reduce((partialSum, a) => partialSum + a, 0),
       };
     });

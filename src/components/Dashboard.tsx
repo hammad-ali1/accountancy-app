@@ -23,6 +23,7 @@ import {
   subtractMonths,
   profitDetailsByMonth,
   profitDetailsByYear,
+  profitDetailsBySixMonths,
 } from "../helpers";
 import {
   Chart as ChartJS,
@@ -118,7 +119,7 @@ function Dashboard() {
       return profitDetailsByYear(profitDetails);
     else if (type === 2)
       //@ts-ignore
-      return data.filter((item) => new Date(item.date) > subtractMonths(6));
+      return profitDetailsBySixMonths(profitDetails);
     else if (type === 3)
       //@ts-ignore
       return profitDetailsByMonth(profitDetails);
