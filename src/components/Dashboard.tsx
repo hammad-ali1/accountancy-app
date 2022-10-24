@@ -21,6 +21,8 @@ import {
   getProfitFromData,
   subtractYears,
   subtractMonths,
+  profitDetailsByMonth,
+  profitDetailsByYear,
 } from "../helpers";
 import {
   Chart as ChartJS,
@@ -113,14 +115,16 @@ function Dashboard() {
   const filterProfitData = (data: any[], type: number) => {
     if (type === 1)
       //@ts-ignore
-      return data.filter((item) => new Date(item.date) > subtractYears(1));
+      return profitDetailsByYear(profitDetails);
     else if (type === 2)
       //@ts-ignore
       return data.filter((item) => new Date(item.date) > subtractMonths(6));
     else if (type === 3)
       //@ts-ignore
-      return data.filter((item) => new Date(item.date) > subtractMonths(1));
-    return data;
+      return profitDetailsByMonth(profitDetails);
+    return data.map((item) => {
+      return { date: monthFormat(item.date), profit: item.profit };
+    });
   };
 
   const user = useAppSelector((state) => selectUser(state));
@@ -224,20 +228,25 @@ function Dashboard() {
             options={profitOptions}
             data={{
               labels: filterProfitData(profitDetails, profitFilter).map(
+                //@ts-ignore
                 (item) => item.date
               ),
               datasets: [
                 {
                   label: "Profit",
-                  data: filterData(profitDetails, profitFilter)
+                  data: filterProfitData(profitDetails, profitFilter)
+                    //@ts-ignore
                     .map((item) => item.profit)
+                    //@ts-ignore
                     .map((item) => (item > 0 ? item : 0)),
                   backgroundColor: green[500],
                 },
                 {
                   label: "Loss",
-                  data: filterData(profitDetails, profitFilter)
+                  data: filterProfitData(profitDetails, profitFilter)
+                    //@ts-ignore
                     .map((item) => item.profit)
+                    //@ts-ignore
                     .map((item) => (item <= 0 ? item : 0)),
                   backgroundColor: red[500],
                 },

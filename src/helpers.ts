@@ -1,3 +1,4 @@
+// @ts-nocheck
 export {};
 //convert date in suitable format
 export const yyyyMMddFormat = (dateString: string | Date) => {
@@ -98,3 +99,75 @@ export function subtractMonths(numOfMonths: number, date = new Date()) {
 
   return date;
 }
+
+//PROFIT HELPERS
+function monthKey(d: Date) {
+  let date = new Date(d);
+  const month = date.toLocaleString("default", { month: "short" });
+  const year = date.toLocaleString("default", { year: "numeric" });
+  return month + " " + year;
+}
+function yearKey(d: Date) {
+  let date = new Date(d);
+  const year = date.toLocaleString("default", { year: "numeric" });
+  return year;
+}
+function findAllWithSameDate(a: any[], date: Date) {
+  let arr = new Array(a);
+  arr.find((item) => item.date === date);
+}
+export const profitDetailsByMonth = (arr) => {
+  let newArr = arr.map((item) => {
+    return { date: monthKey(item.date), profit: item.profit };
+  });
+  newArr = newArr.map((item) => {
+    return {
+      date: item.date,
+      profit: newArr
+        .filter((others) => others.date === item.date)
+        .map((item) => item.profit),
+    };
+  });
+  //get uniques
+  newArr = newArr
+    .filter(
+      (value, index, self) =>
+        index === self.findIndex((t) => t.date === value.date)
+    )
+    .map((item) => {
+      return {
+        date: monthKey(item.date),
+        profit: item.profit.reduce((partialSum, a) => partialSum + a, 0),
+      };
+    });
+  console.log(newArr);
+  return newArr;
+};
+
+export const profitDetailsByYear = (arr) => {
+  let newArr = arr.map((item) => {
+    return { date: yearKey(item.date), profit: item.profit };
+  });
+  newArr = newArr.map((item) => {
+    return {
+      date: item.date,
+      profit: newArr
+        .filter((others) => others.date === item.date)
+        .map((item) => item.profit),
+    };
+  });
+  //get uniques
+  newArr = newArr
+    .filter(
+      (value, index, self) =>
+        index === self.findIndex((t) => t.date === value.date)
+    )
+    .map((item) => {
+      return {
+        date: yearKey(item.date),
+        profit: item.profit.reduce((partialSum, a) => partialSum + a, 0),
+      };
+    });
+  console.log(newArr);
+  return newArr;
+};
