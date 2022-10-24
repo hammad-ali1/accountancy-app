@@ -20,7 +20,7 @@ import PopUp from "./PopUp";
 import AddTransaction from "./AddTransaction";
 //Filter for months
 const months = [
-  "All",
+  "All Months",
   "January",
   "February",
   "March",

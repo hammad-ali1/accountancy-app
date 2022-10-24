@@ -69,8 +69,8 @@ const profitOptions = {
   },
 };
 //array of filters
-const cashFilterOptions = ["All", "Year", "Six Months", "Month"];
-const profitFilterOptions = ["All", "Year", "Six Months", "Month"];
+const cashFilterOptions = ["All Time", "Year", "Six Months", "Month"];
+const profitFilterOptions = ["All Time", "Year", "Six Months", "Month"];
 
 //dashboard component
 function Dashboard() {

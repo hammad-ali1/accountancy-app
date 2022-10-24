@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "../app/hooks";
 import { selectUser } from "../slices/userSlice";
 import API, { Asset } from "../api/auth";
-import { CircularProgress, Box, Button } from "@mui/material";
+import {
+  CircularProgress,
+  Box,
+  Button,
+  TextField,
+  Autocomplete,
+} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 
@@ -13,12 +19,29 @@ import PopUp from "./PopUp";
 import AddAsset from "./AddAsset";
 
 //Assets table component
+//Filter for months
+const months = [
+  "All Months",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 function Assets() {
   const user = useAppSelector((state) => selectUser(state));
   const [loading, setLoading] = useState(false);
   const [gridApi, setGridApi] = useState(null);
   const [tableData, setTableData] = useState([] as Asset[]);
+  const [selectedMonth, setSelectedMonth] = useState(0);
   const [openForm, setOpenForm] = useState(false);
   const [editAsset, setEditAsset] = useState(new Asset());
   useEffect(() => {
@@ -128,16 +151,41 @@ function Assets() {
     setTableData(tableData?.filter((asset) => asset._id !== id));
     API.deleteAsset(id);
   };
+  function filterTableData(tableData: Asset[]): Asset[] {
+    let filteredData = [...tableData];
+    if (selectedMonth > 0) {
+      filteredData = filteredData.filter((asset) => {
+        return new Date(asset.acquiredDate).getMonth() === selectedMonth - 1;
+      });
+      console.log("filering by month ", filteredData);
+    }
+    return filteredData;
+  }
 
   if (loading) return <CircularProgress />;
   return (
     <Box>
+      <div style={{ display: "flex" }}>
+        <Autocomplete
+          disablePortal
+          options={months}
+          sx={{ width: 300, margin: 1, boxShadow: 1 }}
+          value={months[selectedMonth]}
+          onInputChange={(event, value) =>
+            setSelectedMonth(months.findIndex((item) => item === value))
+          }
+          renderInput={(params) => (
+            <TextField {...params} variant="filled" label="Select Month" />
+          )}
+        />
+      </div>
+
       <div
         className="ag-theme-alpine"
         style={{ height: "700px", overflow: "auto" }}
       >
         <AgGridReact
-          rowData={tableData}
+          rowData={filterTableData(tableData)}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           onGridReady={onGridReady}
