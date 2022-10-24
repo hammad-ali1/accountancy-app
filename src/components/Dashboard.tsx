@@ -1,4 +1,4 @@
-import API, { Transaction } from "../api/auth";
+import API from "../api/auth";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../app/hooks";
 import { selectUser } from "../slices/userSlice";
