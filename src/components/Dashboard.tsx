@@ -96,7 +96,10 @@ function Dashboard() {
   const [totalInflow, setTotalInflow] = useState(0);
   const [totalOutflow, setTotalOutflow] = useState(0);
   const [totalAssets, setTotalAssets] = useState(0);
-  const [cashFlowDetails, setCashFlowDetails] = useState([] as any[]);
+  // const [cashFlowDetails, setCashFlowDetails] = useState([] as any[]);
+  const [cashInFlowDetails, setCashInFlowDetails] = useState([] as any[]);
+  const [cashOutFlowDetails, setCashOutFlowDetails] = useState([] as any[]);
+
   const [profitDetails, setProfitDetails] = useState([] as any[]);
   const [cashFilter, setCashFilter] = useState(0);
   const [profitFilter, setProfitFilter] = useState(0);
@@ -136,7 +139,22 @@ function Dashboard() {
         setTotalAssets(result.assetSummary[0].total);
       setTotalInflow(getTotalFromSummary(result.cashFlowSummary, "Inflow"));
       setTotalOutflow(getTotalFromSummary(result.cashFlowSummary, "Outflow"));
-      setCashFlowDetails(result.cashFlowDetail);
+      setCashInFlowDetails(
+        result.cashFlowDetail.map((item: any) => {
+          return {
+            date: item._id,
+            profit: getAmountFromDataset(item.result, "Inflow"),
+          };
+        })
+      );
+      setCashOutFlowDetails(
+        result.cashFlowDetail.map((item: any) => {
+          return {
+            date: item._id,
+            profit: getAmountFromDataset(item.result, "Outflow"),
+          };
+        })
+      );
       //@ts-ignore
       setProfitDetails(
         result.profitDetail.map((item: any) => {
@@ -181,29 +199,28 @@ function Dashboard() {
           <Bar
             options={options}
             data={{
-              labels: filterData(cashFlowDetails, cashFilter).map((item) =>
-                monthFormat(item._id)
+              labels: filterProfitData(cashInFlowDetails, cashFilter).map(
+                //@ts-ignore
+                (item) => item.date
               ),
               datasets: [
                 {
                   label: "Cash Inflow",
-                  data: filterData(cashFlowDetails, cashFilter).map((item) =>
-                    getAmountFromDataset(item.result, "Inflow")
+                  data: filterProfitData(cashInFlowDetails, cashFilter).map(
+                    //@ts-ignore
+                    (item) => item.profit
                   ),
-                  backgroundColor: filterData(cashFlowDetails, cashFilter).map(
-                    (item) => blue[500]
-                  ),
+                  backgroundColor: blue[500],
                   minBarLength: 2,
                 },
                 {
                   label: "Cash Outflow",
-                  data: filterData(cashFlowDetails, cashFilter).map((item) =>
-                    getAmountFromDataset(item.result, "Outflow")
+                  data: filterProfitData(cashOutFlowDetails, cashFilter).map(
+                    //@ts-ignore
+                    (item) => item.profit
                   ),
 
-                  backgroundColor: filterData(cashFlowDetails, cashFilter).map(
-                    (item) => orange[500]
-                  ),
+                  backgroundColor: orange[500],
                   minBarLength: 2,
                 },
               ],
