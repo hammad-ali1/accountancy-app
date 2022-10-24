@@ -97,6 +97,7 @@ function Dashboard() {
   const [profitDetails, setProfitDetails] = useState([] as any[]);
   const [cashFilter, setCashFilter] = useState(0);
   const [profitFilter, setProfitFilter] = useState(0);
+
   const filterData = (data: any[], type: number) => {
     if (type === 1)
       //@ts-ignore
@@ -109,6 +110,19 @@ function Dashboard() {
       return data.filter((item) => new Date(item._id) > subtractMonths(1));
     return data;
   };
+  const filterProfitData = (data: any[], type: number) => {
+    if (type === 1)
+      //@ts-ignore
+      return data.filter((item) => new Date(item.date) > subtractYears(1));
+    else if (type === 2)
+      //@ts-ignore
+      return data.filter((item) => new Date(item.date) > subtractMonths(6));
+    else if (type === 3)
+      //@ts-ignore
+      return data.filter((item) => new Date(item.date) > subtractMonths(1));
+    return data;
+  };
+
   const user = useAppSelector((state) => selectUser(state));
 
   useEffect(() => {
@@ -118,7 +132,12 @@ function Dashboard() {
       setTotalInflow(getTotalFromSummary(result.cashFlowSummary, "Inflow"));
       setTotalOutflow(getTotalFromSummary(result.cashFlowSummary, "Outflow"));
       setCashFlowDetails(result.cashFlowDetail);
-      setProfitDetails(result.profitDetail);
+      //@ts-ignore
+      setProfitDetails(
+        result.profitDetail.map((item: any) => {
+          return { date: item._id, profit: getProfitFromData(item.result) };
+        })
+      );
     });
   }, [user]);
   return (
@@ -204,21 +223,21 @@ function Dashboard() {
           <Bar
             options={profitOptions}
             data={{
-              labels: filterData(profitDetails, profitFilter).map((item) =>
-                monthFormat(item._id)
+              labels: filterProfitData(profitDetails, profitFilter).map(
+                (item) => item.date
               ),
               datasets: [
                 {
                   label: "Profit",
                   data: filterData(profitDetails, profitFilter)
-                    .map((item) => getProfitFromData(item.result))
+                    .map((item) => item.profit)
                     .map((item) => (item > 0 ? item : 0)),
                   backgroundColor: green[500],
                 },
                 {
                   label: "Loss",
                   data: filterData(profitDetails, profitFilter)
-                    .map((item) => getProfitFromData(item.result))
+                    .map((item) => item.profit)
                     .map((item) => (item <= 0 ? item : 0)),
                   backgroundColor: red[500],
                 },
