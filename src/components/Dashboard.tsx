@@ -58,9 +58,26 @@ const options = {
 //profit loss chart options
 const profitOptions = {
   responsive: true,
+  scales: {
+    x: {
+      stacked: true,
+    },
+    y: {
+      stacked: true,
+    },
+  },
   plugins: {
+    scales: {
+      x: {
+        stacked: true,
+      },
+      y: {
+        stacked: true,
+      },
+    },
     legend: {
       position: "top" as const,
+      display: false,
     },
     title: {
       display: true,
