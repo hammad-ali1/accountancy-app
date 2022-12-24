@@ -30,17 +30,17 @@ export class Transaction {
 }
 
 export class Asset {
-  user: string = "";
-  item: string = "";
-  category: string = "";
-  condition: string = "";
-  location: string = "";
-  owner: string = "";
+  user: string = " ";
+  item: string = " ";
+  category: string = " ";
+  condition: string = " ";
+  location: string = " ";
+  owner: string = " ";
   acquiredDate: Date = new Date();
   price: number = 0.0;
   currentValue: number = 0.0;
-  manufacturer: string = "";
-  series: string = "";
+  manufacturer: string = " ";
+  series: string = " ";
   inurance: "yes" | "no" = "yes";
 }
 

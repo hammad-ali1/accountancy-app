@@ -119,13 +119,13 @@ function Dashboard() {
   const filterProfitData = (data: any[], type: number) => {
     if (type === 1)
       //@ts-ignore
-      return profitDetailsByYear(profitDetails);
+      return profitDetailsByYear(data);
     else if (type === 2)
       //@ts-ignore
-      return profitDetailsBySixMonths(profitDetails);
+      return profitDetailsBySixMonths(data);
     else if (type === 3)
       //@ts-ignore
-      return profitDetailsByMonth(profitDetails);
+      return profitDetailsByMonth(data);
     return data.map((item) => {
       return { date: monthFormat(item.date), profit: item.profit };
     });
