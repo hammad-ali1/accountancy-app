@@ -24,6 +24,8 @@ import {
   profitDetailsByMonth,
   profitDetailsByYear,
   profitDetailsBySixMonths,
+  cashDetailsByYear,
+  cashDetailsBySixMonths,
 } from "../helpers";
 import {
   Chart as ChartJS,
@@ -116,16 +118,18 @@ function Dashboard() {
       return data.filter((item) => new Date(item._id) > subtractMonths(1));
     return data;
   };
+
   const filterProfitData = (data: any[], type: number) => {
+    console.log("orig", data);
     if (type === 1)
       //@ts-ignore
-      return profitDetailsByYear(profitDetails);
+      return profitDetailsByYear(data);
     else if (type === 2)
       //@ts-ignore
-      return profitDetailsBySixMonths(profitDetails);
+      return profitDetailsBySixMonths(data);
     else if (type === 3)
       //@ts-ignore
-      return profitDetailsByMonth(profitDetails);
+      return profitDetailsByMonth(data);
     return data.map((item) => {
       return { date: monthFormat(item.date), profit: item.profit };
     });

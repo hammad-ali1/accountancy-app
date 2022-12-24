@@ -152,10 +152,20 @@ export const profitDetailsByMonth = (arr) => {
   console.log(newArr);
   return newArr;
 };
+//CASH DETAILS
+export const cashDetailsByYear = (arr) => {
+  console.log("1", arr);
 
-export const profitDetailsByYear = (arr) => {
   let newArr = arr.map((item) => {
     return { date: yearKey(item.date), profit: item.profit };
+  });
+  console.log("2", newArr);
+  return newArr;
+};
+
+export const cashDetailsBySixMonths = (arr) => {
+  let newArr = arr.map((item) => {
+    return { date: sixMonthKey(item.date), profit: item.profit };
   });
   newArr = newArr.map((item) => {
     return {
@@ -165,6 +175,27 @@ export const profitDetailsByYear = (arr) => {
         .map((item) => item.profit),
     };
   });
+  return newArr;
+};
+
+export const profitDetailsByYear = (arr) => {
+  console.log("1", arr);
+
+  let newArr = arr.map((item) => {
+    return { date: yearKey(item.date), profit: item.profit };
+  });
+  console.log("2", newArr);
+
+  newArr = newArr.map((item) => {
+    return {
+      date: item.date,
+      profit: newArr
+        .filter((others) => others.date === item.date)
+        .map((item) => item.profit),
+    };
+  });
+  console.log("3", newArr);
+
   //get uniques
   newArr = newArr
     .filter(
@@ -177,7 +208,7 @@ export const profitDetailsByYear = (arr) => {
         profit: item.profit.reduce((partialSum, a) => partialSum + a, 0),
       };
     });
-  console.log(newArr);
+  console.log("4", newArr);
   return newArr;
 };
 
